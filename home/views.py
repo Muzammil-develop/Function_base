@@ -29,7 +29,10 @@ def store_list (request):
 @api_view (['GET' , 'PUT' , 'DELETE'])
 def store_detail_view (request , pk):
     if request.method == 'GET':
-        store = Store.objects.get (pk = pk)
+        try :
+            store = Store.objects.get (pk = pk)
+        except :
+            return Response ({'Error' : 'Car not Found'} , status=status.HTTP_404_NOT_FOUND)
         serializer = StoreSerializer (store)
         return Response (serializer.data)
     
